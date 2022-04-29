@@ -18,11 +18,11 @@ app.post('/events',async (req,res)=>{
         else{
             data.status = "Approved"
         }
-        await axios.post('http://localhost:4005/events',{type:"Comment Updated",data})
+        await axios.post('http://localhost:4005/events',{type:"Comment Moderated",data})
     }
 
 
-    res.send()
+    res.send({})
 })
 
 app.listen(4003,()=>{

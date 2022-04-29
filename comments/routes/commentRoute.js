@@ -37,7 +37,9 @@ commentRouter.post('/events',(req,res)=>{
 
     console.log('Received event ',type)
 
-    if(type == 'Comment Updated')
+// could have many other events like comment upvoted,comment liked,etc Query service no need
+// to worry of all other events related to comments. It just needs final Comment Updated event
+    if(type == 'Comment Moderated')
     {
         const {id,content,status,postId} = req.body.data
         commentsByPostId[postId].every((comment,index)=>{
@@ -48,6 +50,13 @@ commentRouter.post('/events',(req,res)=>{
             }
             return true
         })
+
+        const event ={
+            type : "Comment Updated",
+            data : {id,content,status,postId}
+        }
+
+        axios.post('http://localhost:4005/events',event)
     }
 
     res.send()
