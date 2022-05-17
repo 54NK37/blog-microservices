@@ -19,19 +19,21 @@ commentRouter.post('/posts/:id/comments',async (req,res)=>{
 
     const newComment = {id:commentId,content:req.body.comment,status:"Pending"}
     comments.push(newComment)
-
+    commentsByPostId[postId] = comments
     const event = {
         type : "Comment Created",
         data : {id:commentId,content:req.body.comment,status:"Pending",postId}
     }
 
     // creating new event for event-bus
-    await axios.post('http://localhost:4005/events',event)
+    await axios.post('http://event-bus-srv:4005/events',event).catch(err=>{
+        console.log(err.message)
+    })
 
     res.status(201).send(comments)
 })
 
-commentRouter.post('/events',(req,res)=>{
+commentRouter.post('/events',async(req,res)=>{
 
     const type = req.body.type
 
@@ -56,7 +58,9 @@ commentRouter.post('/events',(req,res)=>{
             data : {id,content,status,postId}
         }
 
-        axios.post('http://localhost:4005/events',event)
+        await axios.post('http://event-bus-srv:4005/events',event).catch(err=>{
+            console.log(err.message)
+        })
     }
 
     res.send()

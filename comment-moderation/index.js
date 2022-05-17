@@ -18,7 +18,9 @@ app.post('/events',async (req,res)=>{
         else{
             data.status = "Approved"
         }
-        await axios.post('http://localhost:4005/events',{type:"Comment Moderated",data})
+        await axios.post('http://event-bus-srv:4005/events',{type:"Comment Moderated",data}).catch(err=>{
+            console.log(err.message)
+        })
     }
 
 

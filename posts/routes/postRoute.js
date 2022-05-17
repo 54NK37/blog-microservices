@@ -27,7 +27,9 @@ postRouter.post('/posts',async (req,res)=>{
     }
 
     // creating new event for event-bus
-    await axios.post('http://localhost:4005/events',event)
+    await axios.post('http://event-bus-srv:4005/events',event).catch(err=>{
+        console.log(err.message)
+    })
 
     res.status(201).send(newPost)
 })
