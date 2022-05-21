@@ -16,10 +16,10 @@ app.post('/events',(req,res)=>{
     axios.post('http://posts-clusterip-srv:4000/events',event).catch(err=>{
         console.log(err.message)
     })
-    axios.post('http://comments-clusterip-srv:4001/events',event).catch(err=>{
+    axios.post('http://comments-srv:4001/events',event).catch(err=>{
         console.log(err.message)
     })
-    axios.post('http://query-clusterip-srv:4002/events',event).catch(err=>{
+    axios.post('http://query-srv:4002/events',event).catch(err=>{
         console.log(err.message)
     })
     axios.post('http://comment-moderation-srv:4003/events',event).catch(err=>{
@@ -34,5 +34,6 @@ app.get('/events',()=>{
 })
 
 app.listen(4005,()=>{
+    console.log('v1')
     console.log('Listening on 4005')
 })

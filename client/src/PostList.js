@@ -8,7 +8,7 @@ const PostList = () => {
 
   const fetchPosts = async () => {
     // take whole required data from query service in single post request
-    const res = await axios.get("http://localhost:31542/posts");
+    const res = await axios.get("http://posts.com/posts");
 
     setPosts(res.data);
   };

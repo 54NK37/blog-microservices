@@ -13,15 +13,16 @@ app.listen(4002,async ()=>{
     console.log('Processing events')
 
     try {
-        const res = axios.get('http://event-bus-srv:4005/events').catch(err=>{
+        axios.get('http://event-bus-srv:4005/events').then(data=>{
+            const res = data
+            // handle all pending events ,as this service has been down/launched after making of other services recently
+                for(let event of res)
+                {
+                    handleEvent(event.type,event.data)
+                }
+        }).catch(err=>{
             console.log(err.message)
-        }) || []
-
-// handle all pending events ,as this service has been down/launched after making of other services recently
-        for(let event of res)
-        {
-            handleEvent(event.type,event.data)
-        }
+        }) 
 
     } catch (error) {
         console.log(error)

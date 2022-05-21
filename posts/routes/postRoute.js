@@ -9,7 +9,7 @@ postRouter.get('/posts',(req,res)=>{
     res.send(posts)
 })
 
-postRouter.post('/posts',async (req,res)=>{
+postRouter.post('/posts/create',async (req,res)=>{
     const id = randomBytes(4).toString('hex')
     const title = req.body.title
     const newPost = {
